@@ -1,4 +1,4 @@
-import src.ResultantState
+import src.State
 
 class Action(object):
     #performs a function on a state to return list of resulting states

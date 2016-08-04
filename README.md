@@ -11,3 +11,6 @@ IdentityMatrix = numpy.eye(3)
 
 IdentityMatrix.dot(statevector)
 >>>
+
+state_one = State(self.win_state)
+state_one.get_utility = self.fake_return_it(1)

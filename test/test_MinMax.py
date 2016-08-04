@@ -2,6 +2,7 @@ import unittest
 import mock
 from src.RootNode import RootNode
 from src.Action import Action
+from src.State import State
 import numpy as np
 
 
@@ -9,6 +10,9 @@ class test_MinMax(unittest.TestCase):
 
     def setUp(self):
         self.initiate_game_state()
+
+    def fake_return_it(self, val):
+        return val
 
     def array_to_tuple(self, array):
         return tuple([tuple(i) for i in tuple(array)])
@@ -26,7 +30,7 @@ class test_MinMax(unittest.TestCase):
                 self.array_to_tuple(self.lose_state): 0}
 
     def test_rootNodeReturnOwnState(self):
-        testRootNode = RootNode(self.initial_state)
+        testRootNode = State(self.initial_state)
         expected =  True
         actual = (testRootNode.get_state()==self.initial_state).all()
 
@@ -52,14 +56,15 @@ class test_MinMax(unittest.TestCase):
 
         self.assertRaises(NotImplementedError,testAction.performActionOnRootState, testRootNode)
 
-    def xtest_actionCreatesAndReturnsResultantStates(self):
-        self.initiate_game_state()
+
+    def test_actionCreatesAndReturnsResultantStates(self):
         testdict = self.arrangeTestActionsDict()
         testRootNode = mock.Mock()
         testRootNode.get_state.return_value = self.initial_state
         testAction = Action(testdict)
 
-        #need to create 2 mock states to compare against
-        #actual results
+        expected = [[self.win_state, self.win_action, 1], [self.lose_state, self.lose_action, 0]]
+        results = testAction.return_states(self.initial_state)
+        actual= [[i.get_state, i.get_precipitating_action, i.get_utility] for i in results]
 
-        #write test for notimplementederror
+        self.assertEqual(expected, actual)
