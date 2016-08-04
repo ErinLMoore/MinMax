@@ -10,18 +10,16 @@ class test_MinMax(unittest.TestCase):
     def setUp(self):
         pass
 
-    def array_to_tuple(self, array):
-        return tuple([tuple(i) for i in tuple(array)])
 
     def arrangeTestActionsDict(self):
-        initial_state = np.array([[1],[0],[0]])
-        win_state = np.array([[0],[1],[0]])
-        lose_state = np.array([[0],[0],[1]])
-        winAction = np.array([[0,1,0],[0,0,0],[0,0,0]])
-        loseAction = np.array([[0,0,1],[0,0,0],[0,0,0]])
-        return {self.array_to_tuple(initial_state): [winAction, loseAction],
-                self.array_to_tuple(win_state): 1,
-                self.array_to_tuple(lose_state): 0}
+        self.initial_state = np.array([[1],[0],[0]])
+        self.win_state = np.array([[0],[1],[0]])
+        self.lose_state = np.array([[0],[0],[1]])
+        self.win_action = np.array([[0,1,0],[0,0,0],[0,0,0]])
+        self.lose_action = np.array([[0,0,1],[0,0,0],[0,0,0]])
+        return {Action.array_to_tuple(self.initial_state): [self.win_action, self.lose_action],
+                Action.array_to_tuple(self.win_state): 1,
+                Action.array_to_tuple(self.lose_state): 0}
 
     def test_rootNodeReturnOwnState(self):
         exampleState = [1,0,0]
@@ -31,7 +29,7 @@ class test_MinMax(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def fake_getState(self):
-        return [1,0,0]
+        return self.initial_state
 
     def fake_resultantAction(self):
         pass
@@ -41,6 +39,6 @@ class test_MinMax(unittest.TestCase):
         testRootNode = RootNode([])
         testdict = self.arrangeTestActionsDict()
         testAction = Action(testdict)
-        expected = [np.array([[0,1,0],[0,0,0],[0,0,0]]), np.array([[0,0,1],[0,0,0],[0,0,0]])]
+        expected = [self.win_action, self.lose_action]
         actual = testAction.lookupActions(testRootNode)
         self.assertEqual(expected, actual)

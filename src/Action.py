@@ -1,5 +1,4 @@
 import src.ResultantState
-import numpy as np
 
 class Action(object):
     #returns the set of legal moves in a stat(e
@@ -7,5 +6,11 @@ class Action(object):
     def __init__(self, actionDict):
         self.action_dict = actionDict
 
+    def array_to_tuple(self, array):
+        return tuple([tuple(i) for i in tuple(array)])
+
     def lookupActions(self, rootNode):
-        raise NotImplementedError
+        return self.action_dict[]
+
+    def performActionOnRootState(self, rootNode):
+        raise NotImplmentedError
