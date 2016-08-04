@@ -1,7 +1,7 @@
 import src.ResultantState
 
 class Action(object):
-    #returns the set of legal moves in a stat(e
+    #performs a function on a state to return list of resulting states
 
     def __init__(self, actionDict):
         self.action_dict = actionDict
@@ -10,4 +10,4 @@ class Action(object):
         return self.action_dict[rootNode]
 
     def performActionOnRootState(self, rootNode):
-        raise NotImplmentedError
+        raise NotImplementedError

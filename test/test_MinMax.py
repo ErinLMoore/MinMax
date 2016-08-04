@@ -8,7 +8,7 @@ import numpy as np
 class test_MinMax(unittest.TestCase):
 
     def setUp(self):
-        pass
+        self.initiate_game_state()
 
     def array_to_tuple(self, array):
         return tuple([tuple(i) for i in tuple(array)])
@@ -26,15 +26,14 @@ class test_MinMax(unittest.TestCase):
                 self.array_to_tuple(self.lose_state): 0}
 
     def test_rootNodeReturnOwnState(self):
-        exampleState = [1,0,0]
-        testRootNode = RootNode(exampleState)
-        expected = exampleState
-        actual = testRootNode.get_state()
+        testRootNode = RootNode(self.initial_state)
+        expected =  True
+        actual = (testRootNode.get_state()==self.initial_state).all()
+
         self.assertEqual(expected, actual)
 
 
     def test_actionFunctionLookupActions(self):
-        self.initiate_game_state()
         testRootNode = mock.Mock()
         testRootNode.get_state.return_value = self.initial_state
         testdict = self.arrangeTestActionsDict()
@@ -42,6 +41,25 @@ class test_MinMax(unittest.TestCase):
         test_state = self.array_to_tuple(testRootNode.get_state())
 
         expected = [self.win_action, self.lose_action]
-
         actual = testAction.lookupActions(test_state)
+
         self.assertEqual(expected, actual)
+
+    def test_performActionOnRootStateRaisesError(self):
+        testRootNode = mock.Mock()
+        testdict = self.arrangeTestActionsDict()
+        testAction = Action(testdict)
+
+        self.assertRaises(NotImplementedError,testAction.performActionOnRootState, testRootNode)
+
+    def xtest_actionCreatesAndReturnsResultantStates(self):
+        self.initiate_game_state()
+        testdict = self.arrangeTestActionsDict()
+        testRootNode = mock.Mock()
+        testRootNode.get_state.return_value = self.initial_state
+        testAction = Action(testdict)
+
+        #need to create 2 mock states to compare against
+        #actual results
+
+        #write test for notimplementederror
