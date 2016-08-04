@@ -2,11 +2,12 @@ MinMax
 
 Notes on Numpy:
 
-statevector = ([[ 1.],
+oh if you do from numpy import * you don't have to put numpy.
+statevector = numpy.array([[ 1.],
                 [ 0.],
                 [ 0.]])
 
-IdentityMatrix = eye(3)
+IdentityMatrix = numpy.eye(3)
 
 IdentityMatrix.dot(statevector)
 >>>
