@@ -14,6 +14,9 @@ class test_MinMax(unittest.TestCase):
     def fake_return_it(self, val):
         return val
 
+    def fake_performActionOnRootState(self, root_node, actions):
+        return [[action, action.dot(root_node)] for action in actions]
+
     def array_to_tuple(self, array):
         return tuple([tuple(i) for i in tuple(array)])
 
@@ -53,18 +56,22 @@ class test_MinMax(unittest.TestCase):
         testRootNode = mock.Mock()
         testdict = self.arrangeTestActionsDict()
         testAction = Action(testdict)
-
+        args = [testRootNode, []]
         self.assertRaises(NotImplementedError,testAction.performActionOnRootState, testRootNode)
 
 
     def test_actionCreatesAndReturnsResultantStates(self):
         testdict = self.arrangeTestActionsDict()
-        testRootNode = mock.Mock()
-        testRootNode.get_state.return_value = self.initial_state
+
         testAction = Action(testdict)
 
+        testAction.performActionOnRootState = mock.Mock(return_value = \
+        self.fake_performActionOnRootState(self.initial_state,
+        testAction.lookupActions(self.array_to_tuple(self.initial_state))))
+
+
         expected = [[self.win_state, self.win_action, 1], [self.lose_state, self.lose_action, 0]]
-        results = testAction.return_states(self.initial_state)
+        results = testAction.return_states(self.array_to_tuple(self.initial_state))
         actual= [[i.get_state, i.get_precipitating_action, i.get_utility] for i in results]
 
         self.assertEqual(expected, actual)
