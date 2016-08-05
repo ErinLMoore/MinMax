@@ -101,6 +101,7 @@ class test_MinMax(unittest.TestCase):
         fakeAction = Mock()
         fakeAction.return_resultant_states_or_terminal_values = self.fake_return_terminal_values
         testMinMax.action = fakeAction
+        testMinMax.bestActionFromRootNode(fakeRootNode)
 
         expected = 'min'
         actual = testMinMax.turn
