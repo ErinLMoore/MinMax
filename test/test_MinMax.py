@@ -17,6 +17,10 @@ class test_MinMax(unittest.TestCase):
     def fake_return_it(self, val):
         return val
 
+    def fake_return_terminal_values(self, val):
+        return 1 if val == 'e' else 0
+
+
     def fake_calculate_resultant_states_or_terminal_values(self, state):
         original_state = state.get_state()
         actions_list = [d[state] for d in self.list_of_actions if state in d]
@@ -65,19 +69,26 @@ class test_MinMax(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_minmax_given_terminal_node_returns_none(self):
-        testRootNode = Mock()
-        testRootNode.get_state.return_value = 'd'
+        fakeRootNode = Mock()
+        fakeRootNode.get_state.return_value = 'd'
         testMinMax = MinMax(self.test_action_list)
         testMinMax.action = Mock()
         testMinMax.action.return_resultant_states_or_terminal_values.return_value = 1
 
         expected = None
-        actual = testMinMax.bestActionFromRootNode(testRootNode)
+        actual = testMinMax.bestActionFromRootNode(fakeRootNode)
         self.assertEqual(expected, actual)
 
-    def xtest_minmax_finds_max_of_two_terminal_states_given_root_node(self):
-        testRootNode = Mock()
-        testRootNode.get_state.return_value = 'd'
+    def test_minmax_finds_max_of_two_terminal_states_given_root_node(self):
+        fakeRootNode = Mock()
+        fakeRootNode.get_state.return_value = 'd'
+
         testMinMax = MinMax(self.test_action_list)
-        testAction = Mock()
-        testAction.return_resultant_states_or_terminal_values.return_value = 1
+
+        fakeAction = Mock()
+        fakeAction.return_resultant_states_or_terminal_values = self.fake_return_terminal_values
+        testMinMax.action = fakeAction
+
+        expected = 'd'
+        actual = testMinMax.bestActionFromRootNode(fakeRootNode)
+        self.assertEqual(expected, actual)
