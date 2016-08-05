@@ -41,7 +41,7 @@ class test_MinMax(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_calculate_terminal_value_raises_error(self):
-        testAction = Action(testdict)
+        testAction = Action(self.test_action_list)
         self.assertRaises(NotImplementedError,testAction.calculate_terminal_value, 'a')
 
 

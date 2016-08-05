@@ -17,3 +17,6 @@ class Action(object):
         for new_state in self.lookupActions(root_node):
             return_list.append(State(new_state, root_node))
         return return_list
+
+    def calculate_terminal_value(self, state):
+        raise NotImplementedError
