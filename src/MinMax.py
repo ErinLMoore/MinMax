@@ -9,4 +9,6 @@ class MinMax(object):
         self.action = Action(list_of_actions)
 
     def bestActionFromRootNode(self, state):
-        return 1
+        variable = self.action.return_resultant_states_or_terminal_values(state)
+        if isinstance(variable, int):
+            return None

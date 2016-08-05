@@ -69,8 +69,8 @@ class test_MinMax(unittest.TestCase):
         testRootNode = Mock()
         testRootNode.get_state.return_value = 'd'
         testMinMax = MinMax(self.test_action_list)
-        testAction = Mock()
-        testAction.return_resultant_states_or_terminal_values.return_value = 1
+        testMinMax.action = Mock()
+        testMinMax.action.return_resultant_states_or_terminal_values.return_value = 1
 
         expected = None
         actual = testMinMax.bestActionFromRootNode(testRootNode)
