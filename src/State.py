@@ -2,9 +2,8 @@ class State(object):
     #RESULT(s, a): The transition model, which defines the result of a move.
     #terminal test
     #utility of a state based on states under it
-    def __init__(self, state, precipitating_action=None, utility= None):
+    def __init__(self, state, utility= None):
         self.state = state
-        self.precipitating_action = precipitating_action
         self.utility = utility
 
     def get_state(self):

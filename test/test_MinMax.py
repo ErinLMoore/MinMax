@@ -43,8 +43,8 @@ class test_MinMax(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_rootNodeReturnOwnUtility(self):
-        testRootNode = State('a', 'b', 'c')
-        expected = 'c'
+        testRootNode = State('a',1)
+        expected = 1
         actual = (testRootNode.get_utility())
 
         self.assertEqual(expected, actual)
@@ -97,7 +97,7 @@ class test_MinMax(unittest.TestCase):
         fakeRootNode = State('d')
 
         testMinMax = MinMax(self.test_action_list)
-        testMinMax.toggle_turn()
+        testMinMax._toggle_turn()
         fakeAction = Mock()
         fakeAction.return_resultant_states_or_terminal_values = self.fake_return_terminal_values
         testMinMax.action = fakeAction
