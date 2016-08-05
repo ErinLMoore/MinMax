@@ -15,3 +15,6 @@ class State(object):
 
     def get_utility(self):
         return self.utility
+
+    def set_utility(self, utility):
+        self.utility = utility
