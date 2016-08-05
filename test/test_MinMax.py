@@ -17,50 +17,49 @@ class test_MinMax(unittest.TestCase):
     def fake_return_it(self, val):
         return val
 
-    def arrangeTestActionsDict(self):
-        return {self.array_to_tuple(self.initial_state): [self.win_action, self.lose_action],
-                self.array_to_tuple(self.win_state): 1,
-                self.array_to_tuple(self.lose_state): 0}
+    def fake_calculate_resultant_states_or_terminal_values(self, state):
+        original_state = state.get_state()
+        actions_list = [d[state] for d in self.list_of_actions if state in d]
+        return_list = [State(new_state, original_state) for new_state in actions_list]
+        return return_list
 
     def test_rootNodeReturnOwnState(self):
-        testRootNode = State(['a'])
-        expected = ['a']
+        testRootNode = State('a')
+        expected = 'a'
         actual = (testRootNode.get_state())
 
         self.assertEqual(expected, actual)
 
-
-    def test_actionFunctionLookup(self):
-        testRootNode = Mock()
-        testRootNode.get_state.return_value = 'a'
-        testAction = Action(self.test_action_list)
-        test_state = testRootNode.get_state()
-
-        expected = ['b', 'c']
-        actual = testAction.lookupActions(test_state)
+    def test_rootNodeReturnOwnPrecipitatingAction(self):
+        testRootNode = State('a', 'b')
+        expected = 'b'
+        actual = (testRootNode.get_precipitating_action())
 
         self.assertEqual(expected, actual)
 
-    def test_calculate_terminal_value_raises_error(self):
+    def test_rootNodeReturnOwnUtility(self):
+        testRootNode = State('a', 'b', 'c')
+        expected = 'c'
+        actual = (testRootNode.get_utility())
+
+        self.assertEqual(expected, actual)
+
+    def test_create_terminal_value_raises_error(self):
         testAction = Action(self.test_action_list)
         self.assertRaises(NotImplementedError,testAction.calculate_terminal_value, 'a')
 
-
-    def test_actionCreatesAndReturnsProperResultantStates(self):
+    def test_calculate_resultant_states_or_terminal_values(self):
         testAction = Action(self.test_action_list)
-        testRootNode = Mock()
-        testRootNode.get_state.return_value = 'a'
+        self.assertRaises(NotImplementedError,testAction.return_resultant_states_or_terminal_values, 'a')
 
-        expected = [['b', 'a', None], ['c','a', None]]
-        results = testAction.return_resultant_states_or_terminal_values(testRootNode)
-        actual = [[s.get_state(),s.get_precipitating_action(),s.get_utility()] for s in results]
-        self.assertEqual(expected, actual)
+
 
     def test_action_handles_terminal_states(self):
         testAction = Action(self.test_action_list)
         testRootNode = Mock()
         testRootNode.get_state.return_value = 'd'
         testAction.calculate_terminal_value = Mock(return_value=1)
+        testAction.create_resultant_states_or_terminal_values = Mock(return_value=1)
         expected = 1
         actual = testAction.return_resultant_states_or_terminal_values(testRootNode)
         self.assertEqual(expected, actual)
