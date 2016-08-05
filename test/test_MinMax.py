@@ -51,7 +51,7 @@ class test_MinMax(unittest.TestCase):
 
     def test_create_terminal_value_raises_error(self):
         testAction = Action(self.test_action_list)
-        self.assertRaises(NotImplementedError,testAction.calculate_terminal_value, 'a')
+        self.assertRaises(NotImplementedError,testAction._calculate_terminal_value, 'a')
 
     def test_calculate_resultant_states_or_terminal_values(self):
         testAction = Action(self.test_action_list)

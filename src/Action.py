@@ -12,5 +12,5 @@ class Action(object):
         raise NotImplementedError
 
     def return_resultant_states_or_terminal_values(self, state):
-        return_value = self.create_resultant_states_or_terminal_values(state)
+        return_value = self._create_resultant_states_or_terminal_values(state)
         return return_value
