@@ -40,12 +40,9 @@ class test_MinMax(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def xtest_performActionOnRootStateRaisesError(self):
-        testRootNode = mock.Mock()
-        testdict = self.arrangeTestActionsDict()
+    def test_calculate_terminal_value_raises_error(self):
         testAction = Action(testdict)
-        args = [testRootNode, []]
-        self.assertRaises(NotImplementedError,testAction.performActionOnRootState, testRootNode)
+        self.assertRaises(NotImplementedError,testAction.calculate_terminal_value, 'a')
 
 
     def test_actionCreatesAndReturnsProperResultantStates(self):
@@ -57,3 +54,10 @@ class test_MinMax(unittest.TestCase):
         results = testAction.return_states('a')
         actual = [[s.get_state(),s.get_precipitating_action(),s.get_utility()] for s in results]
         self.assertEqual(expected, actual)
+
+    def xaction_handles_terminal_states(self):
+        testAction = Action(self.test_action_list)
+        testRootNode = mock.Mock()
+        testRootNode.get_state.return_value = 'c'
+
+        testAction.calculate_terminal
