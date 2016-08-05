@@ -14,4 +14,4 @@ class State(object):
         return self.precipitating_action
 
     def get_utility(self):
-        return self.get_utility
+        return self.utility

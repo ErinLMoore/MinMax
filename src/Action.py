@@ -13,4 +13,7 @@ class Action(object):
 
 
     def return_states(self, root_node):
-        pass
+        return_list = []
+        for new_state in self.lookupActions(root_node):
+            return_list.append(State(new_state, root_node))
+        return return_list

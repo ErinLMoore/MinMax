@@ -55,5 +55,5 @@ class test_MinMax(unittest.TestCase):
 
         expected = [['b', 'a', None], ['c','a', None]]
         results = testAction.return_states('a')
-        actual = [[s.get_state(),s.get_action(),s.get_utilty()] for s in results]
+        actual = [[s.get_state(),s.get_precipitating_action(),s.get_utility()] for s in results]
         self.assertEqual(expected, actual)
