@@ -1,5 +1,5 @@
 import unittest
-import mock
+from mock import Mock
 
 from src.Action import Action
 from src.State import State
@@ -30,7 +30,7 @@ class test_MinMax(unittest.TestCase):
 
 
     def test_actionFunctionLookup(self):
-        testRootNode = mock.Mock()
+        testRootNode = Mock()
         testRootNode.get_state.return_value = 'a'
         testAction = Action(self.test_action_list)
         test_state = testRootNode.get_state()
@@ -47,7 +47,7 @@ class test_MinMax(unittest.TestCase):
 
     def test_actionCreatesAndReturnsProperResultantStates(self):
         testAction = Action(self.test_action_list)
-        testRootNode = mock.Mock()
+        testRootNode = Mock()
         testRootNode.get_state.return_value = 'a'
 
         expected = [['b', 'a', None], ['c','a', None]]
@@ -55,9 +55,11 @@ class test_MinMax(unittest.TestCase):
         actual = [[s.get_state(),s.get_precipitating_action(),s.get_utility()] for s in results]
         self.assertEqual(expected, actual)
 
-    def xaction_handles_terminal_states(self):
+    def test_action_handles_terminal_states(self):
         testAction = Action(self.test_action_list)
-        testRootNode = mock.Mock()
+        testRootNode = Mock()
         testRootNode.get_state.return_value = 'd'
-        self.foobar._get_foo = Mock(return_value="foo2")
         testAction.calculate_terminal_value = Mock(return_value=1)
+        expected = 1
+        actual = testAction.return_states(testRootNode)
+        self.assertEqual(expected, actual)

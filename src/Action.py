@@ -8,7 +8,7 @@ class Action(object):
         self.list_of_actions = list_of_actions
 
     def lookupActions(self, state):
-        return_list =  [d[state] for d in self.list_of_actions]
+        return_list =  [d[state] for d in self.list_of_actions if state in d]
         return return_list
 
 
