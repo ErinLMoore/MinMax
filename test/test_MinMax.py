@@ -51,7 +51,7 @@ class test_MinMax(unittest.TestCase):
         testRootNode.get_state.return_value = 'a'
 
         expected = [['b', 'a', None], ['c','a', None]]
-        results = testAction.return_states(testRootNode)
+        results = testAction.return_resultant_states_or_terminal_values(testRootNode)
         actual = [[s.get_state(),s.get_precipitating_action(),s.get_utility()] for s in results]
         self.assertEqual(expected, actual)
 
@@ -61,5 +61,5 @@ class test_MinMax(unittest.TestCase):
         testRootNode.get_state.return_value = 'd'
         testAction.calculate_terminal_value = Mock(return_value=1)
         expected = 1
-        actual = testAction.return_states(testRootNode)
+        actual = testAction.return_resultant_states_or_terminal_values(testRootNode)
         self.assertEqual(expected, actual)
