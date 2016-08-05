@@ -15,7 +15,8 @@ class test_MinMax(unittest.TestCase):
         return val
 
     def fake_performActionOnRootState(self, root_node, actions):
-        return [[action, action.dot(root_node)] for action in actions]
+        return [[self.win_state, self.win_action], [self.lose_state, self.lose_action]]
+        #return [[action, action.dot(root_node)] for action in actions]
 
     def array_to_tuple(self, array):
         return tuple([tuple(i) for i in tuple(array)])
@@ -60,7 +61,7 @@ class test_MinMax(unittest.TestCase):
         self.assertRaises(NotImplementedError,testAction.performActionOnRootState, testRootNode)
 
 
-    def test_actionCreatesAndReturnsResultantStates(self):
+    def test_actionCreatesAndReturnsProperResultantStates(self):
         testdict = self.arrangeTestActionsDict()
 
         testAction = Action(testdict)
@@ -70,8 +71,9 @@ class test_MinMax(unittest.TestCase):
         testAction.lookupActions(self.array_to_tuple(self.initial_state))))
 
 
-        expected = [[self.win_state, self.win_action, 1], [self.lose_state, self.lose_action, 0]]
+        expectedarray = [[self.win_state, self.win_action, 1], [self.lose_state, self.lose_action, 0]]
         results = testAction.return_states(self.array_to_tuple(self.initial_state))
-        actual= [[i.get_state, i.get_precipitating_action, i.get_utility] for i in results]
 
-        self.assertEqual(expected, actual)
+        actualarray= [[i.get_state(), i.get_precipitating_action(), i.get_utility()] for i in results]
+        print (actualarray[0][0])
+        self.assertTrue(np.array_equal(expectedarray[0][0],actualarray[0][0]))

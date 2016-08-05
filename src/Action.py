@@ -15,6 +15,6 @@ class Action(object):
 
     def return_states(self, root_node):
         tuple_of_actions = self.lookupActions(root_node)
-        print(tuple_of_actions)
         resultant_states = self.performActionOnRootState(root_node, tuple_of_actions)
         created_states = [State(state, action) for state, action in resultant_states]
+        return created_states
