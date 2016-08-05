@@ -35,13 +35,6 @@ class test_MinMax(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    def test_rootNodeReturnOwnPrecipitatingAction(self):
-        testRootNode = State('a', 'b')
-        expected = 'b'
-        actual = (testRootNode.get_precipitating_action())
-
-        self.assertEqual(expected, actual)
-
     def test_rootNodeReturnOwnUtility(self):
         testRootNode = State('a',1)
         expected = 1
