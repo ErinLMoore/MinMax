@@ -5,10 +5,10 @@ class Action(object):
     def __init__(self, list_of_actions):
         self.list_of_actions = list_of_actions
 
-    def create_resultant_states_or_terminal_values(self, state):
+    def _create_resultant_states_or_terminal_values(self, state):
         raise NotImplementedError
 
-    def calculate_terminal_value(self, state):
+    def _calculate_terminal_value(self, state):
         raise NotImplementedError
 
     def return_resultant_states_or_terminal_values(self, state):

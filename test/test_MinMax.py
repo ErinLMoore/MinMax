@@ -63,8 +63,8 @@ class test_MinMax(unittest.TestCase):
         testAction = Action(self.test_action_list)
         testRootNode = Mock()
         testRootNode.get_state.return_value = 'd'
-        testAction.calculate_terminal_value = Mock(return_value=1)
-        testAction.create_resultant_states_or_terminal_values = Mock(return_value=1)
+        testAction._calculate_terminal_value = Mock(return_value=1)
+        testAction._create_resultant_states_or_terminal_values = Mock(return_value=1)
         expected = 1
         actual = testAction.return_resultant_states_or_terminal_values(testRootNode)
         self.assertEqual(expected, actual)
