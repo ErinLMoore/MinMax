@@ -4,14 +4,13 @@ class Action(object):
     #performs a function on a state to return list of resulting states
     #root node must be passed in as hashable
 
-    def __init__(self, actionDict):
-        self.action_dict = actionDict
+    def __init__(self, list_of_actions):
+        self.list_of_actions = list_of_actions
 
     def lookupActions(self, root_node):
-        return self.action_dict[root_node]
+        return_list =  [d[root_node] for d in self.list_of_actions]
+        return return_list
 
-    def performActionOnRootState(self, root_node):
-        raise NotImplementedError
 
     def return_states(self, root_node):
         tuple_of_actions = self.lookupActions(root_node)
