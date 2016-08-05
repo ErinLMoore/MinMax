@@ -6,6 +6,7 @@ class MinMax(object):
         self.action = Action(list_of_actions)
         self.turn = 'max'
 
+
     def bestActionFromRootNode(self, root_state):
         resultant_states = self._nextStepFromState(root_state)
         if isinstance(resultant_states, int):
@@ -13,7 +14,8 @@ class MinMax(object):
         else:
             for i in resultant_states:
                 self._nextStepFromState(i)
-            return self._min_or_max(resultant_states)
+            return self._min_or_max(resultant_states).get_utility()
+
 
     def _nextStepFromState(self, state):
         return_value = self.action.return_resultant_states_or_terminal_values(state)
@@ -27,6 +29,7 @@ class MinMax(object):
         return_value = [i for i in list_of_states if i.get_utility() == desired_utility]
         self._toggle_turn()
         return return_value[0]
+
 
     def _toggle_turn(self):
         turn_dict = {'min':'max', 'max':'min'}
