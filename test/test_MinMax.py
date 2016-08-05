@@ -48,19 +48,12 @@ class test_MinMax(unittest.TestCase):
         self.assertRaises(NotImplementedError,testAction.performActionOnRootState, testRootNode)
 
 
-    def xtest_actionCreatesAndReturnsProperResultantStates(self):
-        testdict = self.arrangeTestActionsDict()
+    def test_actionCreatesAndReturnsProperResultantStates(self):
+        testAction = Action(self.test_action_list)
+        testRootNode = mock.Mock()
+        testRootNode.get_state.return_value = 'a'
 
-        testAction = Action(testdict)
-
-        testAction.performActionOnRootState = mock.Mock(return_value = \
-        self.fake_performActionOnRootState(self.initial_state,
-        testAction.lookupActions(self.array_to_tuple(self.initial_state))))
-
-
-        expectedarray = [[self.win_state, self.win_action, 1], [self.lose_state, self.lose_action, 0]]
-        results = testAction.return_states(self.array_to_tuple(self.initial_state))
-
-        actualarray= [[i.get_state(), i.get_precipitating_action(), i.get_utility()] for i in results]
-        print (actualarray[0][0])
-        self.assertTrue(np.array_equal(expectedarray[0][0],actualarray[0][0]))
+        expected = [['b', 'a', None], ['c','a', None]]
+        results = testAction.return_states('a')
+        actual = [[s.get_state(),s.get_action(),s.get_utilty()] for s in results]
+        self.assertEqual(expected, actual)
