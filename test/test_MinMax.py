@@ -3,6 +3,7 @@ from mock import Mock
 
 from src.Action import Action
 from src.State import State
+from src.MinMax import MinMax
 
 
 class test_MinMax(unittest.TestCase):
@@ -63,3 +64,21 @@ class test_MinMax(unittest.TestCase):
         expected = 1
         actual = testAction.return_resultant_states_or_terminal_values(testRootNode)
         self.assertEqual(expected, actual)
+
+    def test_minmax_given_terminal_node_returns_none(self):
+        testRootNode = Mock()
+        testRootNode.get_state.return_value = 'd'
+        testMinMax = MinMax(self.test_action_list)
+        testAction = Mock()
+        testAction.return_resultant_states_or_terminal_values.return_value = 1
+
+        expected = None
+        actual = testMinMax.bestActionFromRootNode(testRootNode)
+        self.assertEqual(expected, actual)
+
+    def xtest_minmax_finds_max_of_two_terminal_states_given_root_node(self):
+        testRootNode = Mock()
+        testRootNode.get_state.return_value = 'd'
+        testMinMax = MinMax(self.test_action_list)
+        testAction = Mock()
+        testAction.return_resultant_states_or_terminal_values.return_value = 1

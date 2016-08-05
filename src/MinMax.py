@@ -1,7 +1,12 @@
-class minMax(object):
+from src.Action import Action
+
+class MinMax(object):
     #has a player
     #gives you a single action from a single state
-    #a tree where the nodes are game states and the edges are moves
     # the minimax value of a terminal state is just its utility
-    def bestActionFromRootNode(state):
-        return None
+
+    def __init__(self, list_of_actions):
+        self.action = Action(list_of_actions)
+
+    def bestActionFromRootNode(self, state):
+        return 1
