@@ -51,13 +51,13 @@ class test_MinMax(unittest.TestCase):
         testRootNode.get_state.return_value = 'a'
 
         expected = [['b', 'a', None], ['c','a', None]]
-        results = testAction.return_states('a')
+        results = testAction.return_states(testRootNode)
         actual = [[s.get_state(),s.get_precipitating_action(),s.get_utility()] for s in results]
         self.assertEqual(expected, actual)
 
     def xaction_handles_terminal_states(self):
         testAction = Action(self.test_action_list)
         testRootNode = mock.Mock()
-        testRootNode.get_state.return_value = 'c'
-
-        testAction.calculate_terminal
+        testRootNode.get_state.return_value = 'd'
+        self.foobar._get_foo = Mock(return_value="foo2")
+        testAction.calculate_terminal_value = Mock(return_value=1)
