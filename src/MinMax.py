@@ -1,9 +1,9 @@
-from src.Action import Action
+from src.Player import Player
 
 class MinMax(object):
 
     def __init__(self, list_of_actions):
-        self.action = Action(list_of_actions)
+        self.list_of_actions= list_of_actions
         self.turn = 'max'
 
 
@@ -30,6 +30,8 @@ class MinMax(object):
         self._toggle_turn()
         return return_value[0]
 
+    def _calculate_terminal_value(self, state):
+        raise NotImplementedError
 
     def _toggle_turn(self):
         turn_dict = {'min':'max', 'max':'min'}
