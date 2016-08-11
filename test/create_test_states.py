@@ -1,5 +1,6 @@
 from mock import Mock
 
+
 def create_test_states(self):
         self.fake_stateA = Mock()
         self.fake_stateA.get_state.return_value = 'a'

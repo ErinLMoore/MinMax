@@ -5,7 +5,6 @@ class MinMax(object):
 
     def __init__(self, list_of_actions):
         self.list_of_actions= list_of_actions
-        self.turn = 'max'
         self.player = self.create_player()
 
     def minmax_decision(self, state):
@@ -19,28 +18,30 @@ class MinMax(object):
         return_value = self.player.return_possible_states(state)
         return return_value
 
-    def create_player(self):
-        return Player(self.list_of_actions)
-
     def _max_value(self, state):
-      v = -sys.maxsize
       if self._terminal_test(state):
           return self._calculate_utility_value(state)
-      for a in self.player.return_possible_states(state):
-          temp = self._min_value(a)
-          if temp >  v:
-              v = temp
-      return v
+
+      current_max_value = -sys.maxsize
+      for action in self.player.return_possible_states(state):
+          utility_of_action = self._min_value(action)
+          if utility_of_action  >  current_max_value:
+              current_max_value = utility_of_action
+      return current_max_value
 
     def _min_value(self, state):
-      v = sys.maxsize
       if self._terminal_test(state):
           return self._calculate_utility_value(state)
-      for a in self.player.return_possible_states(state):
-          temp = self._max_value(a)
-          if temp <  v:
-              v = temp
-      return v
+
+      current_min_value = sys.maxsize
+      for action in self.player.return_possible_states(state):
+          utility_of_action  = self._max_value(action)
+          if utility_of_action  <  current_min_value:
+              current_min_value = utility_of_action
+      return current_min_value
+
+    def create_player(self):
+        return Player(self.list_of_actions)
 
     def _terminal_test(self, state):
         raise NotImplementedError
