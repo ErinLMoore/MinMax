@@ -1,3 +1,4 @@
+import sys
 from src.Player import Player
 
 class MinMax(object):
@@ -8,14 +9,11 @@ class MinMax(object):
         self.player = self.create_player()
 
     def minmax_decision(self, state):
-        #return action
         resultant_states = self._nextStepFromState(state)
         if len(resultant_states) == 0:
             return None
         else:
-            for i in resultant_states:
-                self._nextStepFromState(i)
-            return self._min_or_max(resultant_states).get_utility()
+            return self._max_value(state)
 
     def _nextStepFromState(self, state):
         return_value = self.player.return_possible_states(state)
@@ -25,10 +23,24 @@ class MinMax(object):
         return Player(self.list_of_actions)
 
     def _max_value(self, state):
-        pass
+      v = -sys.maxsize
+      if self._terminal_test(state):
+          return self._calculate_utility_value(state)
+      for a in self.player.return_possible_states(state):
+          temp = self._min_value(a)
+          if temp >  v:
+              v = temp
+      return v
 
     def _min_value(self, state):
-        pass
+      v = sys.maxsize
+      if self._terminal_test(state):
+          return self._calculate_utility_value(state)
+      for a in self.player.return_possible_states(state):
+          temp = self._max_value(a)
+          if temp <  v:
+              v = temp
+      return v
 
     def _terminal_test(self, state):
         raise NotImplementedError
