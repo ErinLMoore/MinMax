@@ -16,7 +16,9 @@ class MinMax(object):
         if len(resultant_states) == 0:
             return None
         else:
-            return self._max_value(state)
+            poss_states = self.player.return_possible_states(state)
+            utility_list = [self._min_value(a) for a in poss_states]
+            return poss_states[utility_list.index(max(utility_list))]
 
     def _nextStepFromState(self, state):
         return_value = self.player.return_possible_states(state)
