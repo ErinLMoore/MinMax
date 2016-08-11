@@ -17,6 +17,9 @@ class MinMax(object):
                 self._nextStepFromState(i)
             return self._min_or_max(resultant_states).get_utility()
 
+    def _nextStepFromState(self, state):
+        return_value = self.player.return_possible_states(state)
+        return return_value
 
     def create_player(self):
         return Player(self.list_of_actions)
