@@ -77,18 +77,24 @@ class test_MinMax(unittest.TestCase):
         self.assertEqual(expected, actual)
 
         expected = 1
-        actual = self.minmax_to_test.minmax_decision(self.fake_stateD)
+        actual = self.minmax_to_test._max_value(self.fake_stateD)
 
         self.assertEqual(expected, actual)
 
     def test_minmax_finds_max_with_walk_of_two_nodes(self):
         expected = -1
-        actual = self.minmax_to_test.minmax_decision(self.fake_stateB)
+        actual = self.minmax_to_test._max_value(self.fake_stateB)
 
         self.assertEqual(expected, actual)
 
     def test_minmax_finds_max_with_walk_of_three_nodes(self):
         expected = 0
-        actual = self.minmax_to_test.minmax_decision(self.fake_stateA)
+        actual = self.minmax_to_test._max_value(self.fake_stateA)
+
+        self.assertEqual(expected, actual)
+
+    def test_minmax_return_best_action_from_node(self):
+        expected = 'b'
+        actual = self.minmax_to_test.minmax_decision(self.fake_stateA).get_state()
 
         self.assertEqual(expected, actual)

@@ -1,6 +1,10 @@
 import sys
 from src.Player import Player
 
+#result a = min(b)
+#result b = min(c)
+#RETURN whichever one's bigger
+
 class MinMax(object):
 
     def __init__(self, list_of_actions):
