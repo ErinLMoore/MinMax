@@ -5,22 +5,20 @@ class MinMax(object):
     def __init__(self, list_of_actions):
         self.list_of_actions= list_of_actions
         self.turn = 'max'
+        self.player = self.create_player()
 
+    def bestActionFromRootNode(self, state):
+        resultant_states = self._nextStepFromState(state)
+        if len(resultant_states) == 0:
+            return None
 
-    def bestActionFromRootNode(self, root_state):
-        resultant_states = self._nextStepFromState(root_state)
-        if isinstance(resultant_states, int):
-            return root_state.get_utility()
         else:
             for i in resultant_states:
                 self._nextStepFromState(i)
             return self._min_or_max(resultant_states).get_utility()
 
-
     def _nextStepFromState(self, state):
-        return_value = self.action.return_resultant_states_or_terminal_values(state)
-        if isinstance(return_value, int):
-            state.set_utility(return_value)
+        return_value = self.player.return_possible_states(state)
         return return_value
 
     def _min_or_max(self, list_of_states):
@@ -36,3 +34,6 @@ class MinMax(object):
     def _toggle_turn(self):
         turn_dict = {'min':'max', 'max':'min'}
         self.turn = turn_dict[self.turn]
+
+    def create_player(self):
+        return Player(self.list_of_actions)

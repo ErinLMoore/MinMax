@@ -13,35 +13,39 @@ class test_MinMax(unittest.TestCase):
         {'a':'b', 'b':'d', 'c':'f'},
         {'a':'c', 'b':'e', 'c':'g'}
         ]
-        fake_player1 = Mock()
-        fake_player1.return_possible_states= self.fake_return_possible_states
-        fake_player2 = Mock()
-        fake_player1.return_possible_states = self.fake_return_possible_states
-        fake_stateA = Mock()
-        fake_stateA.get_state.return_value = 'a'
-        fake_stateB = Mock()
-        fake_stateB.get_state.return_value = 'b'
-        fake_stateC = Mock()
-        fake_stateC.get_state.return_value = 'c'
-        fake_stateD = Mock()
-        fake_stateD.get_state.return_value = 'd'
-        fake_stateE = Mock()
-        fake_stateE.get_state.return_value = 'e'
-        fake_stateF = Mock()
-        fake_stateF.get_state.return_value = 'f'
-        fake_stateG = Mock()
-        fake_stateG.get_state.return_value = 'g'
+        self.fake_player1 = Mock()
+        self.fake_player1.return_possible_states= self.fake_return_possible_states
+        self.fake_player2 = Mock()
+        self.fake_player1.return_possible_states = self.fake_return_possible_states
+        self.fake_stateA = Mock()
+        self.fake_stateA.get_state.return_value = 'a'
+        self.fake_stateB = Mock()
+        self.fake_stateB.get_state.return_value = 'b'
+        self.fake_stateC = Mock()
+        self.fake_stateC.get_state.return_value = 'c'
+        self.fake_stateD = Mock()
+        self.fake_stateD.get_state.return_value = 'd'
+        self.fake_stateE = Mock()
+        self.fake_stateE.get_state.return_value = 'e'
+        self.fake_stateF = Mock()
+        self.fake_stateF.get_state.return_value = 'f'
+        self.fake_stateG = Mock()
+        self.fake_stateG.get_state.return_value = 'g'
+
+    def fake_create_player(self):
+        return self.fake_player1
 
     def fake_return_it(self, val):
         return val
 
     def fake_return_terminal_values(self, state):
-        if state.get_state() == 'd': return [State('e'), State('f')]
-        else: return 1 if state.get_state() == 'e' else 0
+        if state in ['d', 'g']:
+            return 1
+        else: return 0
 
     def fake_return_possible_states(self, state):
         original_state = state.get_state()
-        actions_list = [d[state] for d in self.list_of_actions if state in d]
+        actions_list = [d[state] for d in self.test_action_list if state in d]
         return_list = [State(new_state, original_state) for new_state in actions_list]
         return return_list
 
@@ -57,14 +61,11 @@ class test_MinMax(unittest.TestCase):
         testMinMax= MinMax(self.test_action_list)
         self.assertRaises(NotImplementedError,testMinMax._calculate_terminal_value, 'a')
 
-    def xtest_action_handles_terminal_states(self):
-        testAction = Action(self.test_action_list)
-        testRootNode = Mock()
-        testRootNode.get_state.return_value = 'd'
-        testAction._calculate_terminal_value = Mock(return_value=1)
-        testAction._create_resultant_states_or_terminal_values = Mock(return_value=1)
-        expected = 1
-        actual = testAction.return_resultant_states_or_terminal_values(testRootNode)
+    def test_minmax_handles_terminal_states(self):
+        MinMax.create_player = self.fake_create_player
+        testMinMax = MinMax(self.test_action_list)
+        expected = None
+        actual = testMinMax.bestActionFromRootNode(self.fake_stateG)
         self.assertEqual(expected, actual)
 
     def xtest_minmax_given_terminal_node_returns_itself(self):
