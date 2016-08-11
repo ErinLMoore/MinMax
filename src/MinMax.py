@@ -17,25 +17,18 @@ class MinMax(object):
                 self._nextStepFromState(i)
             return self._min_or_max(resultant_states).get_utility()
 
-    def _nextStepFromState(self, state):
-        return_value = self.player.return_possible_states(state)
-        return return_value
-
-    def _toggle_turn(self):
-        turn_dict = {'min':'max', 'max':'min'}
-        self.turn = turn_dict[self.turn]
 
     def create_player(self):
         return Player(self.list_of_actions)
 
     def _max_value(self, state):
-        raise NotImplementedError
+        pass
 
     def _min_value(self, state):
-        raise NotImplementedError
+        pass
 
     def _terminal_test(self, state):
         raise NotImplementedError
 
-    def _calculate_terminal_value(self, state):
+    def _calculate_utility_value(self, state):
         raise NotImplementedError
