@@ -39,6 +39,24 @@ class test_MinMax(unittest.TestCase):
             return -1
         else: return 0
 
+    def fake_calculate_utility_value(self, state):
+        state_name = state.get_state()
+        if state_name in ['i', 'n']:
+            return 1
+        elif state_name in ['h', 'k','l', 'm', 'o']:
+            return -1
+        else: return 0
+
+    def fake_alternate_calculate_utility_value(self, state):
+        state_name = state.get_state()
+        if state_name in ['k', 'l']:
+            return 4
+        elif state_name in ['i', 'm','n']:
+            return -2
+        elif state_name in ['h', 'j']:
+            return  3
+        else: return 5
+
     def fake_return_possible_states(self, state):
         original_state = state.get_state()
         return_list = [d[original_state] for d in self.test_action_list if original_state in d]
@@ -95,6 +113,13 @@ class test_MinMax(unittest.TestCase):
 
     def test_minmax_return_best_action_from_node(self):
         expected = 'b'
+        actual = self.minmax_to_test.minmax_decision(self.fake_stateA).get_state()
+
+        self.assertEqual(expected, actual)
+
+    def test_minmax_return_best_action_from_node_alternate(self):
+        self.minmax_to_test._calculate_utility_value = self.fake_alternate_calculate_utility_value
+        expected = 'c'
         actual = self.minmax_to_test.minmax_decision(self.fake_stateA).get_state()
 
         self.assertEqual(expected, actual)
