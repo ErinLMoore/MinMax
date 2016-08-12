@@ -1,26 +1,20 @@
 import sys
 from src.Player import Player
 
-#result a = min(b)
-#result b = min(c)
-#RETURN whichever one's bigger
-
 class MinMax(object):
 
-    def __init__(self, list_of_actions):
-        self.list_of_actions= list_of_actions
+    def __init__(self):
         self.player = self.create_player()
 
     def minmax_decision(self, state):
-        resultant_states = self._nextStepFromState(state)
+        resultant_states = self._find_possible_states_from_state(state)
         if len(resultant_states) == 0:
             return None
         else:
-            poss_states = self.player.return_possible_states(state)
-            utility_list = [self._min_value(a) for a in poss_states]
-            return poss_states[utility_list.index(max(utility_list))]
+            utility_list = [self._min_value(a) for a in resultant_states]
+            return resultant_states[utility_list.index(max(utility_list))]
 
-    def _nextStepFromState(self, state):
+    def _find_possible_states_from_state(self, state):
         return_value = self.player.return_possible_states(state)
         return return_value
 
@@ -47,7 +41,7 @@ class MinMax(object):
       return current_min_value
 
     def create_player(self):
-        return Player(self.list_of_actions)
+        return Player()
 
     def _terminal_test(self, state):
         raise NotImplementedError

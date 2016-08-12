@@ -2,9 +2,6 @@ from src.State import State
 
 class Player(object):
 
-    def __init__(self, list_of_actions):
-        self.list_of_actions = list_of_actions
-
     def _look_up_possible_actions(self, state):
         raise NotImplementedError
 
